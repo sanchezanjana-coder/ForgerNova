@@ -8,17 +8,21 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnBackHome = document.getElementById("btn-back-home");
 
     function goToApp() {
-        landingScreen.classList.add("hidden");
-        landingScreen.classList.remove("active");
-        appScreen.classList.remove("hidden");
-        appScreen.classList.add("active");
+        if (landingScreen && appScreen) {
+            landingScreen.classList.add("hidden");
+            landingScreen.classList.remove("active");
+            appScreen.classList.remove("hidden");
+            appScreen.classList.add("active");
+        }
     }
 
     function goToLanding() {
-        appScreen.classList.add("hidden");
-        appScreen.classList.remove("active");
-        landingScreen.classList.remove("hidden");
-        landingScreen.classList.add("active");
+        if (landingScreen && appScreen) {
+            appScreen.classList.add("hidden");
+            appScreen.classList.remove("active");
+            landingScreen.classList.remove("hidden");
+            landingScreen.classList.add("active");
+        }
     }
 
     if (btnEnterTop) btnEnterTop.addEventListener("click", goToApp);
@@ -41,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // CHAT IA - CÓDIGO REAL LUAU
+    // CHAT IA - GENERADOR DINÁMICO MEJORADO FORGENOVA
     const chatForm = document.getElementById("chat-form");
     const chatInput = document.getElementById("chat-input");
     const chatMessages = document.getElementById("chat-messages");
@@ -58,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => {
                 const response = processAIQuery(query);
                 appendMessage("ai", response);
-            }, 500);
+            }, 400);
         });
     }
 
@@ -67,24 +71,118 @@ document.addEventListener("DOMContentLoaded", () => {
         let code = "";
         let text = "";
 
-        if (lower.includes("baje vida") || lower.includes("daño") || lower.includes("quitar vida")) {
-            text = "Aquí tienes el script para reducir la vida del jugador al tocar el bloque:";
-            code = `local part = script.Parent
-local damage = 20
+        // SALUDOS O INTRODUCCIÓN
+        if (lower === "hola" || lower === "buenas" || lower.includes("quien eres")) {
+            return `¡Hola! Soy la IA de <strong>ForgeNova</strong>. Pídeme un script indicando lo que quieres lograr en Roblox Studio (ej: <em>"Hazme un script para ganar monedas al tocar un bloque"</em>, <em>"script de super salto"</em> o <em>"teleportar al tocar"</em>).`;
+        }
+
+        // SISTEMAS DE SALUD Y DAÑO
+        if (lower.includes("vida") || lower.includes("daño") || lower.includes("quitar vida") || lower.includes("lava") || lower.includes("matar")) {
+            text = "Aquí tienes un script de daño/eliminar personaje configurado para Luau:";
+            code = `-- Creado por ForgeNova
+local part = script.Parent
+local damageAmount = 25
 
 part.Touched:Connect(function(hit)
-    local humanoid = hit.Parent:FindFirstChildOfClass("Humanoid")
+    local character = hit.Parent
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    
     if humanoid then
-        humanoid.Health = humanoid.Health - damage
+        humanoid.Health = math.max(0, humanoid.Health - damageAmount)
     end
 end)`;
-        } else {
-            text = `Aquí tienes el script generado para: "${query}"`;
-            code = `-- Script generado para Roblox Studio
-local part = script.Parent
+        } 
+        // MONEDAS / LEADERSTATS / DINERO
+        else if (lower.includes("moneda") || lower.includes("dinero") || lower.includes("leaderstat") || lower.includes("coin") || lower.includes("cash")) {
+            text = "Aquí tienes el sistema completo de Leaderstats para gestionar monedas o dinero:";
+            code = `-- Creado por ForgeNova
+local Players = game:GetService("Players")
 
-part.Touched:Connect(function(hit)
-    print("Objeto tocado por: " .. hit.Name)
+Players.PlayerAdded:Connect(function(player)
+    local leaderstats = Instance.new("Folder")
+    leaderstats.Name = "leaderstats"
+    leaderstats.Parent = player
+
+    local coins = Instance.new("IntValue")
+    coins.Name = "Coins"
+    coins.Value = 0
+    coins.Parent = leaderstats
+end)`;
+        } 
+        // VELOCIDAD O SALTO
+        else if (lower.includes("velocidad") || lower.includes("speed") || lower.includes("salto") || lower.includes("jump")) {
+            text = "Script para alterar la velocidad y potencia de salto del personaje:";
+            code = `-- Creado por ForgeNova
+local pad = script.Parent
+
+pad.Touched:Connect(function(hit)
+    local humanoid = hit.Parent:FindFirstChildOfClass("Humanoid")
+    if humanoid then
+        humanoid.WalkSpeed = 32
+        humanoid.JumpPower = 100
+        task.wait(5)
+        humanoid.WalkSpeed = 16
+        humanoid.JumpPower = 50
+    end
+end)`;
+        } 
+        // TELEPORT / TELETRANSPORTE
+        else if (lower.includes("teleport") || lower.includes("teletranspor") || lower.includes("tp")) {
+            text = "Script de teletransporte a unas coordenadas específicas:";
+            code = `-- Creado por ForgeNova
+local portal = script.Parent
+local destination = Vector3.new(0, 50, 0) -- Cambia las coordenadas aquí
+
+portal.Touched:Connect(function(hit)
+    local root = hit.Parent:FindFirstChild("HumanoidRootPart")
+    if root then
+        root.CFrame = CFrame.new(destination)
+    end
+end)`;
+        }
+        // PUERTA / TRANSPARENCIA
+        else if (lower.includes("puerta") || lower.includes("transparen") || lower.includes("abrir")) {
+            text = "Script para hacer una puerta interactiva temporal:";
+            code = `-- Creado por ForgeNova
+local door = script.Parent
+local debounce = false
+
+door.Touched:Connect(function(hit)
+    if hit.Parent:FindFirstChildOfClass("Humanoid") and not debounce then
+        debounce = true
+        door.Transparency = 0.8
+        door.CanCollide = false
+        task.wait(3)
+        door.Transparency = 0
+        door.CanCollide = true
+        debounce = false
+    end
+end)`;
+        }
+        // GENERADOR DINÁMICO POR DEFECTO PARA OTRAS PETICIONES
+        else {
+            const cleanQuery = query.replace(/[^\w\s]/gi, "");
+            text = `Aquí tienes el script adaptado para <strong>"${cleanQuery}"</strong>:`;
+            code = `-- Script generado dinámicamente por ForgeNova
+-- Requerimiento: ${cleanQuery}
+
+local Services = {
+    Players = game:GetService("Players"),
+    TweenService = game:GetService("TweenService")
+}
+
+local currentPart = script.Parent
+
+local function onEventTriggered(player)
+    print("Ejecutando acción de ForgeNova para: " .. tostring(player))
+    -- TODO: Agrega aquí tu lógica personalizada
+end
+
+currentPart.Touched:Connect(function(hit)
+    local player = Services.Players:GetPlayerFromCharacter(hit.Parent)
+    if player then
+        onEventTriggered(player)
+    end
 end)`;
         }
 
@@ -120,15 +218,15 @@ end)`;
             fixerResult.classList.remove("hidden");
             if (err.includes("attempt to index nil with 'Humanoid'")) {
                 fixerContent.innerHTML = `
-                    <p><strong>Problema:</strong> Se intentó acceder a <code>Humanoid</code> cuando la parte tocada no pertenecía a un personaje.</p>
-                    <p style="margin-top:8px;"><strong>Solución:</strong> Comprueba la existencia antes de restar vida:</p>
+                    <p><strong>Problema:</strong> Se intentó acceder a <code>Humanoid</code> cuando el objeto tocado no pertenecía a un personaje.</p>
+                    <p style="margin-top:8px;"><strong>Solución ForgeNova:</strong> Comprueba la existencia previa:</p>
                     <pre><code>local hum = hit.Parent:FindFirstChildOfClass("Humanoid")
 if hum then
     hum.Health = hum.Health - 10
 end</code></pre>`;
             } else {
                 fixerContent.innerHTML = `
-                    <p><strong>Sugerencia de depuración:</strong> Revisa que no tengas variables declaradas sin asignar (<code>nil</code>) o que las funciones contengan su respectivo <code>end</code>.</p>`;
+                    <p><strong>Diagnóstico de ForgeNova:</strong> Revisa la sintaxis, verifica que no tengas variables en <code>nil</code> o que falten cierres tipo <code>end</code> en tus funciones.</p>`;
             }
         });
     }
@@ -162,7 +260,7 @@ end</code></pre>`;
         });
     }
 
-    // BOTONES DE COLOR
+    // OPCIONES DE COLOR
     const colorBtns = document.querySelectorAll(".color-btn");
     colorBtns.forEach(btn => {
         btn.addEventListener("click", () => {
