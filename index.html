@@ -1,171 +1,171 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ForgeNova | Roblox Luau Engine</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ForgeNova | Roblox Luau Engine</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body class="dark-theme theme-purple">
 
-    <!-- PANTALLA LANDING / PORTADA -->
-    <div id="landing-screen" class="view-screen hidden">
-        <header class="navbar-container">
-            <div class="navbar">
-                <div class="nav-brand">
-                    <img src="logo.png" alt="ForgeNova Logo" class="custom-logo">
-                    <span>ForgeNova</span>
-                </div>
-                <nav class="nav-links">
-                    <a href="#hero">Inicio</a>
-                    <a href="#features">Funciones</a>
-                </nav>
-                <button class="btn-purple" id="btn-enter-app-top">Iniciar Asistente</button>
-            </div>
-        </header>
-
-        <main class="landing-body">
-            <section id="hero" class="hero-section">
-                <h1 class="hero-title">Biblioteca y Generador Luau<br>para Roblox Studio</h1>
-                <p class="hero-description">Consigue scripts profesionales, probados y listos para usar en tus videojuegos.</p>
-                <div class="hero-actions">
-                    <button class="btn-purple btn-large" id="btn-enter-app-hero">Abrir Plataforma</button>
-                </div>
-            </section>
-        </main>
-    </div>
-
-    <!-- PANTALLA DASHBOARD / APP -->
-    <div id="app-screen" class="view-screen active">
-        <div class="app-layout">
-            
-            <!-- BARRA LATERAL (SIDEBAR) -->
-            <aside class="sidebar">
-                <div class="sidebar-brand">
-                    <img src="logo.png" alt="ForgeNova Logo" class="custom-logo">
-                    <h2>ForgeNova</h2>
-                </div>
-                
-                <nav class="sidebar-nav">
-                    <button class="nav-item active" data-view="library">
-                        <i class="fas fa-book"></i> Biblioteca (Recomendado)
-                    </button>
-                    <button class="nav-item" data-view="chat">
-                        <i class="fas fa-robot"></i> Generador Luau
-                    </button>
-                    <button class="nav-item" data-view="fixer">
-                        <i class="fas fa-bug"></i> Error Fixer
-                    </button>
-                    <button class="nav-item" data-view="settings">
-                        <i class="fas fa-palette"></i> Colores y Tema
-                    </button>
-                </nav>
-
-                <div class="sidebar-footer">
-                    <button class="btn-outline" id="btn-back-home" style="width: 100%; margin-bottom: 12px;">
-                        <i class="fas fa-home"></i> Volver a Inicio
-                    </button>
-                </div>
-            </aside>
-
-            <!-- CONTENIDO PRINCIPAL -->
-            <main class="main-content">
-                
-                <!-- VISTA 1: BIBLIOTECA (RECOMENDADO) -->
-                <section id="view-library" class="view-section active">
-                    <header class="view-header">
-                        <h1>Biblioteca de Scripts (Recomendado)</h1>
-                        <p>Los 20 sistemas Luau más utilizados, optimizados e hipercompletos para Roblox Studio.</p>
-                    </header>
-
-                    <div class="search-bar-container glass-card" style="margin-bottom: 20px;">
-                        <input type="text" id="library-search" placeholder="🔍 Buscar script en la biblioteca (ej: leaderstats, lava, puerta, teleport)...">
-                    </div>
-
-                    <div class="library-grid" id="library-container">
-                        <!-- Los scripts se cargarán dinámicamente desde script.js -->
-                    </div>
-                </section>
-
-                <!-- VISTA 2: GENERADOR CON IA/CONVERSACIONAL -->
-                <section id="view-chat" class="view-section">
-                    <header class="view-header">
-                        <h1>Generador de Código Luau</h1>
-                        <p>Pide una mecánica personalizada que no esté en la biblioteca.</p>
-                    </header>
-                    
-                    <div class="chat-container">
-                        <div class="chat-messages" id="chat-messages">
-                            <div class="message ai-message">
-                                <i class="fas fa-robot avatar"></i>
-                                <div class="message-content">
-                                    ¡Hola! Soy ForgeNova. Te recomiendo revisar primero la <strong>Biblioteca (Recomendado)</strong> para obtener scripts listos. Si necesitas algo muy específico, escríbelo aquí.
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <form class="chat-input-area" id="chat-form">
-                            <input type="text" id="chat-input" placeholder="Escribe tu instrucción aquí..." required autocomplete="off">
-                            <button type="submit" class="btn-purple">
-                                <i class="fas fa-paper-plane"></i>
-                            </button>
-                        </form>
-                    </div>
-                </section>
-
-                <!-- VISTA 3: ERROR FIXER -->
-                <section id="view-fixer" class="view-section">
-                    <header class="view-header">
-                        <h1>Depurador de Errores de Consola</h1>
-                        <p>Pega un error del Output de Roblox Studio para diagnosticarlo.</p>
-                    </header>
-
-                    <div class="fixer-container glass-card">
-                        <textarea id="fixer-input" rows="5" placeholder="Pega el mensaje de error aquí..."></textarea>
-                        <button id="fixer-submit" class="btn-purple" style="margin-top: 10px;">
-                            <i class="fas fa-wrench"></i> Reparar Código
-                        </button>
-
-                        <div id="fixer-result" class="fixer-result-box hidden" style="margin-top: 15px;">
-                            <h3>Diagnóstico y Solución</h3>
-                            <div id="fixer-content"></div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- VISTA 4: CONFIGURACIÓN / COLORES -->
-                <section id="view-settings" class="view-section">
-                    <header class="view-header">
-                        <h1>Personalización de Tema</h1>
-                        <p>Ajusta el color de acento y los colores de la plataforma.</p>
-                    </header>
-
-                    <div class="settings-grid">
-                        <div class="glass-card">
-                            <h3><i class="fas fa-palette"></i> Paleta de Colores</h3>
-                            <p style="color: #a78bfa; margin: 8px 0 15px 0;">Selecciona el color principal para los botones e interfaz:</p>
-                            <div class="color-options" style="display: flex; gap: 15px;">
-                                <button class="color-btn active" data-color="purple" style="background:#8b5cf6; width:40px; height:40px; border-radius:50%; border:2px solid #fff; cursor:pointer;"></button>
-                                <button class="color-btn" data-color="green" style="background:#10b981; width:40px; height:40px; border-radius:50%; border:2px solid #fff; cursor:pointer;"></button>
-                                <button class="color-btn" data-color="blue" style="background:#3b82f6; width:40px; height:40px; border-radius:50%; border:2px solid #fff; cursor:pointer;"></button>
-                                <button class="color-btn" data-color="orange" style="background:#f97316; width:40px; height:40px; border-radius:50%; border:2px solid #fff; cursor:pointer;"></button>
-                            </div>
-                        </div>
-
-                        <div class="glass-card" style="margin-top: 20px;">
-                            <h3><i class="fas fa-adjust"></i> Modo Claro / Oscuro</h3>
-                            <button id="theme-toggle-btn" class="btn-outline" style="margin-top: 10px;">
-                                <i class="fas fa-sun"></i> <span id="theme-btn-text">Cambiar a Modo Claro</span>
-                            </button>
-                        </div>
-                    </div>
-                </section>
-
-            </main>
+  <!-- PANTALLA LANDING / PORTADA -->
+  <div id="landing-screen" class="view-screen hidden">
+    <header class="navbar-container">
+      <div class="navbar">
+        <div class="nav-brand">
+          <img src="logo.png" alt="ForgeNova Logo" class="custom-logo">
+          <span>ForgeNova</span>
         </div>
-    </div>
+        <nav class="nav-links">
+          <a href="#hero">Inicio</a>
+          <a href="#features">Funciones</a>
+        </nav>
+        <button class="btn-purple" id="btn-enter-app-top">Iniciar Asistente</button>
+      </div>
+    </header>
 
-    <script src="script.js"></script>
+    <main class="landing-body">
+      <section id="hero" class="hero-section">
+        <h1 class="hero-title">Biblioteca y Generador Luau<br>para Roblox Studio</h1>
+        <p class="hero-description">Consigue scripts profesionales, probados y listos para usar en tus videojuegos.</p>
+        <div class="hero-actions">
+          <button class="btn-purple btn-large" id="btn-enter-app-hero">Abrir Plataforma</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- PANTALLA DASHBOARD / APP -->
+  <div id="app-screen" class="view-screen active">
+    <div class="app-layout">
+
+      <!-- BARRA LATERAL (SIDEBAR) -->
+      <aside class="sidebar">
+        <div class="sidebar-brand">
+          <img src="logo.png" alt="ForgeNova Logo" class="custom-logo">
+          <h2>ForgeNova</h2>
+        </div>
+
+        <nav class="sidebar-nav">
+          <button class="nav-item active" data-view="library">
+            <i class="fas fa-book"></i> Biblioteca (Recomendado)
+          </button>
+          <button class="nav-item" data-view="chat">
+            <i class="fas fa-robot"></i> Generador Luau
+          </button>
+          <button class="nav-item" data-view="fixer">
+            <i class="fas fa-bug"></i> Error Fixer
+          </button>
+          <button class="nav-item" data-view="settings">
+            <i class="fas fa-palette"></i> Colores y Tema
+          </button>
+        </nav>
+
+        <div class="sidebar-footer">
+          <button class="btn-outline" id="btn-back-home" style="width: 100%; margin-bottom: 12px;">
+            <i class="fas fa-home"></i> Volver a Inicio
+          </button>
+        </div>
+      </aside>
+
+      <!-- CONTENIDO PRINCIPAL -->
+      <main class="main-content">
+
+        <!-- VISTA 1: BIBLIOTECA -->
+        <section id="view-library" class="view-section active">
+          <header class="view-header">
+            <h1>Biblioteca de Scripts (Recomendado)</h1>
+            <p>Los 20 sistemas Luau más utilizados, optimizados e hipercompletos para Roblox Studio.</p>
+          </header>
+
+          <div class="search-bar-container glass-card" style="margin-bottom: 20px;">
+            <input type="text" id="library-search" placeholder="🔍 Buscar script en la biblioteca (ej: leaderstats, lava, puerta, teleport)...">
+          </div>
+
+          <div class="library-grid" id="library-container"></div>
+        </section>
+
+        <!-- VISTA 2: GENERADOR -->
+        <section id="view-chat" class="view-section">
+          <header class="view-header">
+            <h1>Generador de Código Luau</h1>
+            <p>Pide una mecánica personalizada que no esté en la biblioteca.</p>
+          </header>
+
+          <div class="chat-container">
+            <div class="chat-messages" id="chat-messages">
+              <div class="message ai-message">
+                <i class="fas fa-robot avatar"></i>
+                <div class="message-content">
+                  ¡Hola! Soy ForgeNova. Te recomiendo revisar primero la <strong>Biblioteca (Recomendado)</strong> para obtener scripts listos. Si necesitas algo muy específico, escríbelo aquí.
+                </div>
+              </div>
+            </div>
+
+            <form class="chat-input-area" id="chat-form">
+              <input type="text" id="chat-input" placeholder="Escribe tu instrucción aquí..." required autocomplete="off">
+              <button type="submit" class="btn-purple" aria-label="Enviar">
+                <i class="fas fa-paper-plane"></i>
+              </button>
+            </form>
+          </div>
+        </section>
+
+        <!-- VISTA 3: ERROR FIXER -->
+        <section id="view-fixer" class="view-section">
+          <header class="view-header">
+            <h1>Depurador de Errores de Consola</h1>
+            <p>Pega un error del Output de Roblox Studio para diagnosticarlo.</p>
+          </header>
+
+          <div class="fixer-container glass-card">
+            <textarea id="fixer-input" rows="5" placeholder="Pega el mensaje de error aquí..."></textarea>
+
+            <button id="fixer-submit" class="btn-purple" style="margin-top: 10px;">
+              <i class="fas fa-wrench"></i> Reparar Código
+            </button>
+
+            <div id="fixer-result" class="fixer-result-box hidden" style="margin-top: 15px;">
+              <h3>Diagnóstico y Solución</h3>
+              <div id="fixer-content"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- VISTA 4: CONFIG -->
+        <section id="view-settings" class="view-section">
+          <header class="view-header">
+            <h1>Personalización de Tema</h1>
+            <p>Ajusta el color de acento y los colores de la plataforma.</p>
+          </header>
+
+          <div class="settings-grid">
+            <div class="glass-card">
+              <h3><i class="fas fa-palette"></i> Paleta de Colores</h3>
+              <p style="color: #a78bfa; margin: 8px 0 15px 0;">Selecciona el color principal para los botones e interfaz:</p>
+              <div class="color-options" style="display: flex; gap: 15px;">
+                <button class="color-btn active" data-color="purple" style="background:#8b5cf6; width:40px; height:40px; border-radius:50%; border:2px solid #fff; cursor:pointer;"></button>
+                <button class="color-btn" data-color="green" style="background:#10b981; width:40px; height:40px; border-radius:50%; border:2px solid #fff; cursor:pointer;"></button>
+                <button class="color-btn" data-color="blue" style="background:#3b82f6; width:40px; height:40px; border-radius:50%; border:2px solid #fff; cursor:pointer;"></button>
+                <button class="color-btn" data-color="orange" style="background:#f97316; width:40px; height:40px; border-radius:50%; border:2px solid #fff; cursor:pointer;"></button>
+              </div>
+            </div>
+
+            <div class="glass-card" style="margin-top: 20px;">
+              <h3><i class="fas fa-adjust"></i> Modo Claro / Oscuro</h3>
+              <button id="theme-toggle-btn" class="btn-outline" style="margin-top: 10px;">
+                <i class="fas fa-sun"></i> <span id="theme-btn-text">Cambiar a Modo Claro</span>
+              </button>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
