@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ForgeNova | Your Intelligent Developer Assistant</title>
-    <link rel="stylesheet" href="style.css?v=10.0">
+    <title>ForgeNova | Roblox Luau AI Engine</title>
+    <link rel="stylesheet" href="style.css?v=11.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="dark-theme theme-purple">
 
-    <!-- PANTALLA 1: LANDING PAGE -->
+    <!-- LANDING PAGE -->
     <div id="landing-screen" class="view-screen active">
-        
         <header class="navbar-container">
             <div class="navbar">
                 <div class="nav-brand">
@@ -19,77 +18,28 @@
                     <span>ForgeNova</span>
                 </div>
                 <nav class="nav-links">
-                    <a href="#hero">Home</a>
-                    <a href="#features">Features</a>
-                    <a href="#about">About</a>
-                    <a href="#code">Examples</a>
+                    <a href="#hero">Inicio</a>
+                    <a href="#features">Funciones</a>
+                    <a href="#code">Ejemplo Luau</a>
                 </nav>
-                <button class="btn-purple" id="btn-enter-app-top">Get Started</button>
+                <button class="btn-purple" id="btn-enter-app-top">Iniciar Asistente</button>
             </div>
         </header>
 
         <main class="landing-body">
             <section id="hero" class="hero-section">
-                <h1 class="hero-title">Build Roblox Games<br>Smarter with AI.</h1>
+                <h1 class="hero-title">Generador Inteligente de Código Luau<br>para Roblox Studio</h1>
                 <p class="hero-description">
-                    ForgeNova helps Roblox developers generate scripts, solve errors, learn Luau and create better games faster than ever.
+                    Escribe lo que necesitas y ForgeNova creará los Scripts y LocalScripts para tu juego en segundos.
                 </p>
                 <div class="hero-actions">
-                    <button class="btn-purple btn-large" id="btn-enter-app-hero">Get Started</button>
-                    <a href="#features" class="btn-outline btn-large">Learn More</a>
+                    <button class="btn-purple btn-large" id="btn-enter-app-hero">Abrir Panel Generador</button>
                 </div>
-            </section>
-
-            <section id="features" class="section-container">
-                <h2 class="section-title">¿Qué puedes hacer con ForgeNova?</h2>
-                <div class="cards-grid">
-                    <div class="glass-card">
-                        <i class="fas fa-robot card-icon"></i>
-                        <h3>Asistente IA</h3>
-                        <p>Genera scripts limpios y optimizados para Roblox Studio a partir de texto.</p>
-                    </div>
-                    <div class="glass-card">
-                        <i class="fas fa-book card-icon"></i>
-                        <h3>Librería Módulo</h3>
-                        <p>Módulos de código, Leaderstats y mecánicas básicas listos para copiar y pegar.</p>
-                    </div>
-                    <div class="glass-card">
-                        <i class="fas fa-bug card-icon"></i>
-                        <h3>Error Fixer</h3>
-                        <p>Pega los errores de la consola de Roblox y obtén soluciones explicadas.</p>
-                    </div>
-                </div>
-            </section>
-
-            <section id="code" class="section-container">
-                <h2 class="section-title">Ejemplo de Código Luau</h2>
-                <p class="section-subtitle">Nuestra IA genera scripts adaptados a las mejores prácticas de Roblox:</p>
-                <div class="glass-card preview-code">
-                    <pre><code>local Players = game:GetService("Players")
-
-Players.PlayerAdded:Connect(function(player)
-    local leaderstats = Instance.new("Folder")
-    leaderstats.Name = "leaderstats"
-    leaderstats.Parent = player
-
-    local coins = Instance.new("IntValue")
-    coins.Name = "Coins"
-    coins.Value = 100
-    coins.Parent = leaderstats
-end)</code></pre>
-                </div>
-            </section>
-
-            <section id="about" class="section-container text-center">
-                <h2 class="section-title">Acerca de ForgeNova</h2>
-                <p class="section-subtitle">
-                    Diseñado especialmente para creadores de Roblox Studio. Acelera tu flujo de trabajo y resuelve errores en segundos.
-                </p>
             </section>
         </main>
     </div>
 
-    <!-- PANTALLA 2: APP DASHBOARD -->
+    <!-- APP DASHBOARD -->
     <div id="app-screen" class="view-screen hidden">
         <div class="app-layout">
             <aside class="sidebar">
@@ -100,32 +50,29 @@ end)</code></pre>
                 
                 <nav class="sidebar-nav">
                     <button class="nav-item active" data-view="chat">
-                        <i class="fas fa-comments"></i> Chat IA
-                    </button>
-                    <button class="nav-item" data-view="library">
-                        <i class="fas fa-book"></i> Librería
+                        <i class="fas fa-code"></i> Generador Luau
                     </button>
                     <button class="nav-item" data-view="fixer">
                         <i class="fas fa-bug"></i> Error Fixer
                     </button>
                     <button class="nav-item" data-view="settings">
-                        <i class="fas fa-cog"></i> Configuración
+                        <i class="fas fa-palette"></i> Colores y Tema
                     </button>
                 </nav>
 
                 <div class="sidebar-footer">
-                    <button class="btn-outline" id="btn-back-home" style="width: 100%; margin-bottom: 12px; padding: 8px;">
+                    <button class="btn-outline" id="btn-back-home" style="width: 100%; margin-bottom: 12px;">
                         <i class="fas fa-home"></i> Volver a Inicio
                     </button>
-                    <span style="font-size: 0.8rem; color: var(--text-secondary);">v10.0 ForgeNova</span>
                 </div>
             </aside>
 
             <main class="main-content">
+                <!-- VIEW CHAT GENERADOR -->
                 <section id="view-chat" class="view-section active">
                     <header class="view-header">
-                        <h1>Asistente IA para Roblox</h1>
-                        <p>Genera scripts en Luau, resuelve dudas o diseña mecánicas.</p>
+                        <h1>Generador de Código Luau</h1>
+                        <p>Pide el script exacto que necesitas para tu juego de Roblox Studio.</p>
                     </header>
                     
                     <div class="chat-container">
@@ -133,13 +80,16 @@ end)</code></pre>
                             <div class="message ai-message">
                                 <i class="fas fa-robot avatar"></i>
                                 <div class="message-content">
-                                    ¡Hola! Soy el asistente de ForgeNova. ¿Qué script o sistema necesitas crear hoy para tu juego?
+                                    ¡Hola! Pídeme cualquier código para Roblox Studio. Ejemplos:<br>
+                                    • <em>"Script para un botón GUI que mata al personaje"</em><br>
+                                    • <em>"Leaderstats de monedas al tocar un bloque"</em><br>
+                                    • <em>"Script para aumentar velocidad al pisar una parte"</em>
                                 </div>
                             </div>
                         </div>
                         
                         <form class="chat-input-area" id="chat-form">
-                            <input type="text" id="chat-input" placeholder="Ej: Hazme un script para un bloque que quita vida..." required autocomplete="off">
+                            <input type="text" id="chat-input" placeholder="Escribe lo que quieres que haga el script de Roblox..." required autocomplete="off">
                             <button type="submit" class="btn-purple">
                                 <i class="fas fa-paper-plane"></i>
                             </button>
@@ -147,79 +97,49 @@ end)</code></pre>
                     </div>
                 </section>
 
-                <section id="view-library" class="view-section">
-                    <header class="view-header">
-                        <h1>Librería de Componentes</h1>
-                        <p>Snippets y módulos de código listos para copiar y pegar.</p>
-                    </header>
-
-                    <div class="library-grid">
-                        <div class="glass-card library-card">
-                            <div class="card-badge">DataStore</div>
-                            <h3>Leaderstats Base</h3>
-                            <p>Guarda monedas y datos esenciales del jugador al entrar.</p>
-                            <pre><code>local Players = game:GetService("Players")
-
-Players.PlayerAdded:Connect(function(player)
-    local leaderstats = Instance.new("Folder")
-    leaderstats.Name = "leaderstats"
-    leaderstats.Parent = player
-
-    local coins = Instance.new("IntValue")
-    coins.Name = "Coins"
-    coins.Value = 0
-    coins.Parent = leaderstats
-end)</code></pre>
-                            <button class="btn-outline copy-btn"><i class="fas fa-copy"></i> Copiar Código</button>
-                        </div>
-
-                        <div class="glass-card library-card">
-                            <div class="card-badge badge-red">Mecánica</div>
-                            <h3>KillBlock (Lava)</h3>
-                            <p>Elimina instantáneamente al personaje al tocar la parte.</p>
-                            <pre><code>local part = script.Parent
-
-part.Touched:Connect(function(hit)
-    local humanoid = hit.Parent:FindFirstChildOfClass("Humanoid")
-    if humanoid then
-        humanoid.Health = 0
-    end
-end)</code></pre>
-                            <button class="btn-outline copy-btn"><i class="fas fa-copy"></i> Copiar Código</button>
-                        </div>
-                    </div>
-                </section>
-
+                <!-- VIEW FIXER -->
                 <section id="view-fixer" class="view-section">
                     <header class="view-header">
-                        <h1>Depurador de Errores (Fixer)</h1>
-                        <p>Pega el error del Output de Roblox Studio para obtener la solución.</p>
+                        <h1>Depurador de Errores de Consola</h1>
+                        <p>Pega un error del Output de Roblox Studio para repararlo.</p>
                     </header>
 
                     <div class="fixer-container glass-card">
-                        <textarea id="fixer-input" rows="5" placeholder="Pega el mensaje de error aquí..."></textarea>
+                        <textarea id="fixer-input" rows="5" placeholder="Ej: Workspace.Part.Script:3: attempt to index nil with 'Humanoid'"></textarea>
                         <button id="fixer-submit" class="btn-purple" style="margin-top: 10px;">
-                            <i class="fas fa-wrench"></i> Analizar y Resolver
+                            <i class="fas fa-wrench"></i> Corregir Error
                         </button>
 
                         <div id="fixer-result" class="fixer-result-box hidden">
-                            <h3 style="margin-bottom: 10px;"><i class="fas fa-check-circle" style="color: #10b981;"></i> Diagnóstico</h3>
+                            <h3>Solución Recomendada</h3>
                             <div id="fixer-content"></div>
                         </div>
                     </div>
                 </section>
 
+                <!-- VIEW SETTINGS (RESTAURADA) -->
                 <section id="view-settings" class="view-section">
                     <header class="view-header">
-                        <h1>Configuración y Personalización</h1>
-                        <p>Ajusta el tema y la apariencia del panel.</p>
+                        <h1>Personalización de la Interfaz</h1>
+                        <p>Cambia el color de acento y botones del panel.</p>
                     </header>
 
                     <div class="settings-grid">
                         <div class="glass-card">
-                            <h3><i class="fas fa-adjust"></i> Modo de Tema</h3>
-                            <p style="color: var(--text-secondary); margin: 8px 0 15px 0;">Alterna entre modo oscuro y claro.</p>
-                            <button id="theme-toggle-btn" class="btn-outline">
+                            <h3><i class="fas fa-palette"></i> Color de Fondo y Botones</h3>
+                            <p style="color: var(--text-secondary); margin: 8px 0 15px 0;">Selecciona el tema de color principal para la web:</p>
+                            
+                            <div class="color-options" style="display: flex; gap: 10px;">
+                                <button class="color-btn active" data-color="purple" style="background:#8b5cf6; width:35px; height:35px; border-radius:50%; border:2px solid white; cursor:pointer;"></button>
+                                <button class="color-btn" data-color="green" style="background:#10b981; width:35px; height:35px; border-radius:50%; border:2px solid white; cursor:pointer;"></button>
+                                <button class="color-btn" data-color="blue" style="background:#3b82f6; width:35px; height:35px; border-radius:50%; border:2px solid white; cursor:pointer;"></button>
+                                <button class="color-btn" data-color="orange" style="background:#f97316; width:35px; height:35px; border-radius:50%; border:2px solid white; cursor:pointer;"></button>
+                            </div>
+                        </div>
+
+                        <div class="glass-card" style="margin-top: 15px;">
+                            <h3><i class="fas fa-adjust"></i> Modo Claro / Oscuro</h3>
+                            <button id="theme-toggle-btn" class="btn-outline" style="margin-top: 10px;">
                                 <i class="fas fa-sun"></i> <span id="theme-btn-text">Cambiar a Modo Claro</span>
                             </button>
                         </div>
@@ -229,6 +149,6 @@ end)</code></pre>
         </div>
     </div>
 
-    <script src="script.js?v=10.0"></script>
+    <script src="script.js?v=11.0"></script>
 </body>
 </html>
