@@ -3,23 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NovaForge | Your Intelligent Developer Assistant</title>
-    <link rel="stylesheet" href="style.css?v=8.0">
+    <title>ForgeNova | Your Intelligent Developer Assistant</title>
+    <link rel="stylesheet" href="style.css?v=10.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="dark-theme theme-purple">
 
-    <!-- ========================================== -->
-    <!-- PANTALLA 1: LANDING PAGE INTACTA          -->
-    <!-- ========================================== -->
+    <!-- PANTALLA 1: LANDING PAGE -->
     <div id="landing-screen" class="view-screen active">
         
-        <!-- BARRA DE NAVEGACIÓN FLOTANTE -->
         <header class="navbar-container">
             <div class="navbar">
                 <div class="nav-brand">
-                    <img src="logo.png" alt="NovaForge Logo" class="custom-logo">
-                    <span>NovaForge</span>
+                    <img src="logo.png" alt="ForgeNova Logo" class="custom-logo">
+                    <span>ForgeNova</span>
                 </div>
                 <nav class="nav-links">
                     <a href="#hero">Home</a>
@@ -32,11 +29,10 @@
         </header>
 
         <main class="landing-body">
-            <!-- HERO PRINCIPAL -->
             <section id="hero" class="hero-section">
                 <h1 class="hero-title">Build Roblox Games<br>Smarter with AI.</h1>
                 <p class="hero-description">
-                    NovaForge helps Roblox developers generate scripts, solve errors, learn Luau and create better games faster than ever.
+                    ForgeNova helps Roblox developers generate scripts, solve errors, learn Luau and create better games faster than ever.
                 </p>
                 <div class="hero-actions">
                     <button class="btn-purple btn-large" id="btn-enter-app-hero">Get Started</button>
@@ -44,9 +40,8 @@
                 </div>
             </section>
 
-            <!-- CARACTERÍSTICAS -->
             <section id="features" class="section-container">
-                <h2 class="section-title">¿Qué puedes hacer con NovaForge?</h2>
+                <h2 class="section-title">¿Qué puedes hacer con ForgeNova?</h2>
                 <div class="cards-grid">
                     <div class="glass-card">
                         <i class="fas fa-robot card-icon"></i>
@@ -66,7 +61,6 @@
                 </div>
             </section>
 
-            <!-- EJEMPLO DE CÓDIGO -->
             <section id="code" class="section-container">
                 <h2 class="section-title">Ejemplo de Código Luau</h2>
                 <p class="section-subtitle">Nuestra IA genera scripts adaptados a las mejores prácticas de Roblox:</p>
@@ -86,9 +80,8 @@ end)</code></pre>
                 </div>
             </section>
 
-            <!-- ACERCA DE -->
             <section id="about" class="section-container text-center">
-                <h2 class="section-title">Acerca de NovaForge</h2>
+                <h2 class="section-title">Acerca de ForgeNova</h2>
                 <p class="section-subtitle">
                     Diseñado especialmente para creadores de Roblox Studio. Acelera tu flujo de trabajo y resuelve errores en segundos.
                 </p>
@@ -96,15 +89,13 @@ end)</code></pre>
         </main>
     </div>
 
-    <!-- ========================================== -->
-    <!-- PANTALLA 2: DASHBOARD / INTERFAZ APP       -->
-    <!-- ========================================== -->
+    <!-- PANTALLA 2: APP DASHBOARD -->
     <div id="app-screen" class="view-screen hidden">
         <div class="app-layout">
             <aside class="sidebar">
                 <div class="sidebar-brand">
-                    <img src="logo.png" alt="NovaForge Logo" class="custom-logo">
-                    <h2>NovaForge</h2>
+                    <img src="logo.png" alt="ForgeNova Logo" class="custom-logo">
+                    <h2>ForgeNova</h2>
                 </div>
                 
                 <nav class="sidebar-nav">
@@ -126,12 +117,11 @@ end)</code></pre>
                     <button class="btn-outline" id="btn-back-home" style="width: 100%; margin-bottom: 12px; padding: 8px;">
                         <i class="fas fa-home"></i> Volver a Inicio
                     </button>
-                    <span style="font-size: 0.8rem; color: var(--text-secondary);">v8.0 Perfeccionado</span>
+                    <span style="font-size: 0.8rem; color: var(--text-secondary);">v10.0 ForgeNova</span>
                 </div>
             </aside>
 
             <main class="main-content">
-                <!-- VISTA: CHAT IA -->
                 <section id="view-chat" class="view-section active">
                     <header class="view-header">
                         <h1>Asistente IA para Roblox</h1>
@@ -143,13 +133,13 @@ end)</code></pre>
                             <div class="message ai-message">
                                 <i class="fas fa-robot avatar"></i>
                                 <div class="message-content">
-                                    ¡Hola! Soy el asistente de NovaForge. ¿Qué script o sistema necesitas crear hoy para tu juego?
+                                    ¡Hola! Soy el asistente de ForgeNova. ¿Qué script o sistema necesitas crear hoy para tu juego?
                                 </div>
                             </div>
                         </div>
                         
                         <form class="chat-input-area" id="chat-form">
-                            <input type="text" id="chat-input" placeholder="Ej: Hazme un script para un bloque que daña al tocarlo..." required autocomplete="off">
+                            <input type="text" id="chat-input" placeholder="Ej: Hazme un script para un bloque que quita vida..." required autocomplete="off">
                             <button type="submit" class="btn-purple">
                                 <i class="fas fa-paper-plane"></i>
                             </button>
@@ -157,7 +147,6 @@ end)</code></pre>
                     </div>
                 </section>
 
-                <!-- VISTA: LIBRERÍA -->
                 <section id="view-library" class="view-section">
                     <header class="view-header">
                         <h1>Librería de Componentes</h1>
@@ -198,48 +187,9 @@ part.Touched:Connect(function(hit)
 end)</code></pre>
                             <button class="btn-outline copy-btn"><i class="fas fa-copy"></i> Copiar Código</button>
                         </div>
-
-                        <div class="glass-card library-card">
-                            <div class="card-badge badge-blue">Interactuable</div>
-                            <h3>Puerta Transparente</h3>
-                            <p>Permite el paso temporalmente al tocar el bloque.</p>
-                            <pre><code>local door = script.Parent
-local db = false
-
-door.Touched:Connect(function(hit)
-    if hit.Parent:FindFirstChild("Humanoid") and not db then
-        db = true
-        door.Transparency = 0.8
-        door.CanCollide = false
-        task.wait(3)
-        door.Transparency = 0
-        door.CanCollide = true
-        db = false
-    end
-end)</code></pre>
-                            <button class="btn-outline copy-btn"><i class="fas fa-copy"></i> Copiar Código</button>
-                        </div>
-
-                        <div class="glass-card library-card">
-                            <div class="card-badge badge-green">Movimiento</div>
-                            <h3>Propulsor de Velocidad</h3>
-                            <p>Duplica la velocidad de caminata al pisar la parte.</p>
-                            <pre><code>local pad = script.Parent
-
-pad.Touched:Connect(function(hit)
-    local hum = hit.Parent:FindFirstChildOfClass("Humanoid")
-    if hum and hum.WalkSpeed == 16 then
-        hum.WalkSpeed = 32
-        task.wait(5)
-        hum.WalkSpeed = 16
-    end
-end)</code></pre>
-                            <button class="btn-outline copy-btn"><i class="fas fa-copy"></i> Copiar Código</button>
-                        </div>
                     </div>
                 </section>
 
-                <!-- VISTA: ERROR FIXER -->
                 <section id="view-fixer" class="view-section">
                     <header class="view-header">
                         <h1>Depurador de Errores (Fixer)</h1>
@@ -247,7 +197,7 @@ end)</code></pre>
                     </header>
 
                     <div class="fixer-container glass-card">
-                        <textarea id="fixer-input" rows="5" placeholder="Pega el mensaje de error aquí... Ej: ServerScriptService.Script:5: attempt to index nil with 'Humanoid'"></textarea>
+                        <textarea id="fixer-input" rows="5" placeholder="Pega el mensaje de error aquí..."></textarea>
                         <button id="fixer-submit" class="btn-purple" style="margin-top: 10px;">
                             <i class="fas fa-wrench"></i> Analizar y Resolver
                         </button>
@@ -259,7 +209,6 @@ end)</code></pre>
                     </div>
                 </section>
 
-                <!-- VISTA: CONFIGURACIÓN -->
                 <section id="view-settings" class="view-section">
                     <header class="view-header">
                         <h1>Configuración y Personalización</h1>
@@ -274,24 +223,12 @@ end)</code></pre>
                                 <i class="fas fa-sun"></i> <span id="theme-btn-text">Cambiar a Modo Claro</span>
                             </button>
                         </div>
-
-                        <div class="glass-card">
-                            <h3><i class="fas fa-palette"></i> Color de Acento</h3>
-                            <p style="color: var(--text-secondary); margin: 8px 0 12px 0;">Elige tu color preferido:</p>
-                            <div class="color-options">
-                                <button class="color-btn purple active" data-color="purple" title="Morado"></button>
-                                <button class="color-btn blue" data-color="blue" title="Azul"></button>
-                                <button class="color-btn green" data-color="green" title="Verde"></button>
-                                <button class="color-btn orange" data-color="orange" title="Naranja"></button>
-                            </div>
-                        </div>
                     </div>
                 </section>
-
             </main>
         </div>
     </div>
 
-    <script src="script.js?v=8.0"></script>
+    <script src="script.js?v=10.0"></script>
 </body>
 </html>
