@@ -1,21 +1,154 @@
-/* ... conserva TODO tu CSS anterior ... */
-
-/* Si no tienes esto en otro lado, es necesario para que las vistas cambien */
+/* =========================
+   VISIBILITY / ROUTING
+   ========================= */
 .view-screen.hidden { display: none !important; }
 .view-screen.active { display: block; }
 .view-section { display: none; }
 .view-section.active { display: block; }
 
-/* Ajuste para que el code no se vea mal en modo claro */
-code {
-  font-family: 'Consolas', 'Courier New', monospace;
-  font-size: 0.88rem;
-  color: var(--code-color, #38bdf8);
-  white-space: pre-wrap;
-  word-break: break-all;
+/* =========================
+   GLASSMORPHISM + DARK DEFAULT
+   ========================= */
+:root {
+  /* Fondo oscuro de alto contraste (Dark mode por defecto) */
+  --bg-0: #0f172a;  /* slate-900 */
+  --bg-1: #1e293b;  /* slate-800 */
+
+  /* Identidad ForgeNova (Púrpura neon) */
+  --accent-primary: #8b5cf6;
+
+  /* Acentos intercambiables */
+  --accent-emerald: #10b981;
+  --accent-electric-blue: #3b82f6;
+  --accent-orange: #f97316;
+
+  /* Glassmorphism */
+  --glass-bg: rgba(15, 23, 42, 0.35);
+  --glass-bg-2: rgba(30, 41, 59, 0.28);
+  --glass-border: rgba(255, 255, 255, 0.10);
+  --glass-shadow: 0 16px 60px rgba(0, 0, 0, 0.45);
+  --glass-blur: 14px;
+
+  /* Tipografía */
+  --font-sans: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: Consolas, "Courier New", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Código */
+  --code-bg: rgba(0, 0, 0, 0.30);
+  --code-border: rgba(255, 255, 255, 0.10);
+  --code-color: #38bdf8; /* default cyan/azul para code */
 }
 
-/* Define default para modo claro */
+/* Dark Mode por defecto */
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background: radial-gradient(1200px 600px at 15% 10%, rgba(139, 92, 246, 0.20), transparent 55%),
+              radial-gradient(900px 500px at 90% 25%, rgba(59, 130, 246, 0.18), transparent 55%),
+              linear-gradient(180deg, var(--bg-0), var(--bg-1));
+  color: rgba(255, 255, 255, 0.92);
+}
+
+/* Paneles/cards con Glassmorphism */
+.glass,
+.card,
+.panel,
+.sidebar,
+.navbar,
+.view-section,
+.grid-card {
+  background: linear-gradient(180deg, var(--glass-bg), var(--glass-bg-2));
+  border: 1px solid var(--glass-border); /* 1px sutil */
+  border-radius: 16px;
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+}
+
+/* =========================
+   ACENTOS “PERSONALIZABLES”
+   (Si tu JS/capas alternan con clases)
+   ========================= */
+body[data-accent="purple"] { --accent-primary: #8b5cf6; }
+body[data-accent="emerald"] { --accent-primary: #10b981; }
+body[data-accent="blue"] { --accent-primary: #3b82f6; }
+body[data-accent="orange"] { --accent-primary: #f97316; }
+
+/* =========================
+   BOTONES / ETIQUETAS (para resaltar)
+   ========================= */
+.btn,
+.button,
+.tag,
+.pill,
+.badge,
+.status {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.btn.primary,
+.button.primary {
+  border-color: rgba(139, 92, 246, 0.35);
+  background: linear-gradient(180deg, rgba(139, 92, 246, 0.25), rgba(139, 92, 246, 0.10));
+  box-shadow: 0 0 0 1px rgba(139, 92, 246, 0.20), 0 14px 40px rgba(139, 92, 246, 0.22);
+}
+
+/* =========================
+   TIPOGRAFÍA DEV + BLOQUES DE CÓDIGO (Roblox Studio style)
+   ========================= */
+
+/* Ajuste: "code no se vea mal" y se vea como editor */
+code,
+pre code {
+  font-family: var(--font-mono);
+  font-size: 0.90rem;
+  color: var(--code-color, #38bdf8);
+  white-space: pre-wrap;
+  word-break: break-word;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--code-border);
+  padding: 0.35rem 0.6rem;
+  border-radius: 12px;
+}
+
+/* Si usas <pre><code> para bloques grandes */
+pre {
+  margin: 0.75rem 0;
+  padding: 1rem 1rem;
+  background: linear-gradient(180deg, rgba(0,0,0,0.38), rgba(0,0,0,0.25));
+  border: 1px solid var(--code-border);
+  border-radius: 16px;
+  overflow: auto;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+}
+
+/* (Opcional pero típico) resaltar “barra de editor” visual */
+pre::before {
+  content: " ";
+  display: block;
+  height: 10px;
+  width: 100%;
+  margin: -1rem 0 0.8rem;
+  background: linear-gradient(90deg,
+    rgba(16,185,129,0.25),
+    rgba(59,130,246,0.25),
+    rgba(249,115,22,0.25)
+  );
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px 16px 0 0;
+}
+
+/* =========================
+   MODO CLARO (si de verdad lo necesitas)
+   ========================= */
 body.light-mode {
+  background: linear-gradient(180deg, #f8fafc, #e2e8f0);
+  color: rgba(2, 6, 23, 0.92);
+
+  /* Ajusta color de código si quieres contraste */
   --code-color: #2563eb;
+  --glass-bg: rgba(255, 255, 255, 0.45);
+  --glass-bg-2: rgba(226, 232, 240, 0.35);
+  --glass-border: rgba(2, 6, 23, 0.10);
 }
