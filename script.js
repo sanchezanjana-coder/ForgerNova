@@ -706,8 +706,7 @@ part.AssemblyLinearVelocity = part.CFrame.LookVector * SPEED`
   }
 
   async function generateCustomLuau(query) {
-    if (!GROQ_API_KEY || GROQ_API_KEY === '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') {
-
+if (!GROQ_API_KEY || GROQ_API_KEY.trim() === "") {
     try {
       const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
         method: "POST",
