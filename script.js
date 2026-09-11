@@ -1,5 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
   // ==========================================================================
+  // 🔑 PON TU CLAVE DE GROQ EN LA SIGUIENTE LÍNEA (DENTRO DE LAS COMILLAS):
+  // ==========================================================================
+  const GROQ_API_KEY = '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';
+
+  // ==========================================================================
   // 1) BASE DE DATOS BIBLIOTECA (20 scripts)
   // ==========================================================================
   const scriptLibrary = [
@@ -614,7 +619,7 @@ part.AssemblyLinearVelocity = part.CFrame.LookVector * SPEED`
   }
 
   // ==========================================================================
-  // 3) COPY PERFECTO
+  // 3) BOTONES DE COPIAR (COPY)
   // ==========================================================================
   function setupCopyButtons(root = document) {
     const buttons = root.querySelectorAll(".copy-btn");
@@ -656,7 +661,7 @@ part.AssemblyLinearVelocity = part.CFrame.LookVector * SPEED`
   }
 
   // ==========================================================================
-  // 4) NAV (SIDEBAR) - CAMBIO DE VIEWS
+  // 4) NAVEGACIÓN Y MENÚ LATERAL (SIDEBAR)
   // ==========================================================================
   const navItems = document.querySelectorAll(".sidebar-nav .nav-item");
   const viewSections = document.querySelectorAll(".view-section");
@@ -675,7 +680,7 @@ part.AssemblyLinearVelocity = part.CFrame.LookVector * SPEED`
   });
 
   // ==========================================================================
-  // 5) CHAT (Generador)
+  // 5) CHAT E INTELIGENCIA ARTIFICIAL (CONEXIÓN A GROQ)
   // ==========================================================================
   const chatForm = document.getElementById("chat-form");
   const chatInput = document.getElementById("chat-input");
@@ -703,41 +708,83 @@ part.AssemblyLinearVelocity = part.CFrame.LookVector * SPEED`
     setupCopyButtons(msgDiv);
   }
 
-  function generateCustomLuau(query) {
-    return `
-      <p>Estructura Luau generada para: <strong>"${query}"</strong></p>
-      <div style="margin: 8px 0; font-size: 0.85rem; color: var(--primary-color);">
-        <i class="fas fa-file-code"></i> Tipo: <strong>Server Script</strong> |
-        <i class="fas fa-folder"></i> Ubicación: <code>ServerScriptService</code>
-      </div>
+  async function generateCustomLuau(query) {
+    if (!GROQ_API_KEY || GROQ_API_KEY === 'AQUI_PONES_TU_CLAVE') {
+      return `<p style="color: #ef4444;">⚠️ No has configurado tu clave API. Abre el archivo <code>script.js</code> y reemplaza el texto <code>'AQUI_PONES_TU_CLAVE'</code> en la línea 6 por tu clave real de Groq.</p>`;
+    }
 
-      <pre><code>-- Código personalizado para: ${query}
-local Players = game:GetService("Players")
+    try {
+      const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${GROQ_API_KEY}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          model: "llama-3.3-70b-versatile",
+          messages: [
+            {
+              role: "system",
+              content: "Eres un experto programador de Roblox Studio. Responde SIEMPRE generando un código funcional en Luau dentro de un bloque markdown ```lua. Muestra un breve resumen de dónde colocar el script (ServerScriptService, Workspace, etc.)."
+            },
+            {
+              role: "user",
+              content: query
+            }
+          ],
+          temperature: 0.2
+        })
+      });
 
-Players.PlayerAdded:Connect(function(player)
-	print("Mecánica activa para " .. player.Name)
-end)</code></pre>
+      const data = await response.json();
 
-      <button class="btn-purple copy-btn" style="margin-top:8px; width:100%;">
-        <i class="fas fa-copy"></i> Copiar Código
-      </button>
-    `;
+      if (data.error) {
+        return `<p style="color: #ef4444;">Error de la API: ${data.error.message}</p>`;
+      }
+
+      const rawContent = data.choices[0].message.content;
+
+      // Extraer código dentro de bloques de markdown ```lua ... ```
+      const codeMatch = rawContent.match(/```(?:lua)?\n([\s\S]*?)```/);
+      const extractedCode = codeMatch ? codeMatch[1].trim() : rawContent;
+      
+      // Limpiar texto explicativo para mostrarlo arriba del código
+      const textExplanation = rawContent.replace(/```[\s\S]*?```/g, "").trim();
+
+      return `
+        <p>${textExplanation || "Código generado con éxito:"}</p>
+        <pre><code>${extractedCode}</code></pre>
+        <button class="btn-purple copy-btn" style="margin-top:8px; width:100%;">
+          <i class="fas fa-copy"></i> Copiar Código
+        </button>
+      `;
+    } catch (error) {
+      console.error(error);
+      return `
+        <p style="color: #ef4444;">Error al conectar con la IA. Revisa tu clave API o tu conexión a internet.</p>
+      `;
+    }
   }
 
   if (chatForm) {
-    chatForm.addEventListener("submit", (e) => {
+    chatForm.addEventListener("submit", async (e) => {
       e.preventDefault();
 
       const query = chatInput.value.trim();
       if (!query) return;
 
-      appendMessage("user", `${query}`);
+      appendMessage("user", query);
       chatInput.value = "";
 
-      setTimeout(() => {
-        const responseHtml = generateCustomLuau(query);
-        appendMessage("ai", responseHtml);
-      }, 300);
+      appendMessage("ai", "<p>🤖 Generando código Luau...</p>");
+
+      const responseHtml = await generateCustomLuau(query);
+      
+      const lastAiMessage = chatMessages.lastElementChild.querySelector(".message-content");
+      if (lastAiMessage) {
+        lastAiMessage.innerHTML = responseHtml;
+        setupCopyButtons(chatMessages.lastElementChild);
+      }
     });
   }
 
@@ -778,7 +825,7 @@ local parte = workspace:WaitForChild("NombreDeTuParte")</code></pre>
   }
 
   // ==========================================================================
-  // 7) TEMAS (Color + Light/Dark)
+  // 7) CONFIGURACIÓN DE TEMAS Y COLORES
   // ==========================================================================
   const themeBtn = document.getElementById("theme-toggle-btn");
   const themeBtnText = document.getElementById("theme-btn-text");
@@ -812,7 +859,7 @@ local parte = workspace:WaitForChild("NombreDeTuParte")</code></pre>
   });
 
   // ==========================================================================
-  // 8) LANDING / BACK HOME
+  // 8) LANDING Y PANTALLA PRINCIPAL
   // ==========================================================================
   const landingScreen = document.getElementById("landing-screen");
   const appScreen = document.getElementById("app-screen");
