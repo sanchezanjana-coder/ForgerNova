@@ -379,20 +379,26 @@ body {
 }
 
 .avatar {
-  width: 36px;                 /* O el tamaño en px que tenga tu contenedor */
+  width: 36px;
   height: 36px;
+  min-width: 36px;            /* Evita que el círculo se aplaste */
   border-radius: 50%;
   background-color: #8b5cf6;   /* Tu color morado */
   
-  /* Esto centra perfectamente el icono dentro del círculo */
+  /* Alineación centrada perfecta */
   display: flex;
   align-items: center;
   justify-content: center;
   
-  /* Ajusta el tamaño y alineación del icono */
+  /* Ajuste del icono interno */
   font-size: 16px;
   color: #ffffff;
-  flex-shrink: 0;              /* Evita que el círculo se deforme */
+  margin: 0 10px;             /* Separa el círculo del texto */
+}
+
+.avatar i {
+  display: block;             /* Elimina desajustes de texto en el icono */
+  line-height: 1;
 }
 
 .message-content {
