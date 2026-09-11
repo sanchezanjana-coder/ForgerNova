@@ -528,18 +528,80 @@ part.AssemblyLinearVelocity = part.CFrame.LookVector * SPEED`
   const libraryContainer = document.getElementById("library-container");
   const searchInput = document.getElementById("library-search");
 
-  function renderLibrary(scripts) {
-    if (!libraryContainer) return;
-    libraryContainer.innerHTML = "";
+ function renderLibrary(scripts) {
+  if (!libraryContainer) return;
+  libraryContainer.innerHTML = "";
 
-    if (!scripts || scripts.length === 0) {
-      libraryContainer.innerHTML = `
-        <p style="color: var(--text-secondary); grid-column: 1/-1;">
-          No se encontraron scripts que coincidan con la búsqueda.
-        </p>`;
-      return;
+  if (!scripts || scripts.length === 0) {
+    libraryContainer.innerHTML = `
+      <p style="color: var(--text-secondary); grid-column: 1/-1;">
+        No se encontraron scripts que coincidan con la búsqueda.
+      </p>`;
+    return;
+  }
+
+  scripts.forEach(item => {
+    const card = document.createElement("div");
+    card.className = "glass-card script-card";
+
+    // ====== TAGS por ubicación (Workspace / ServerScriptService / StarterGui) ======
+    const loc = (item.location || "").toLowerCase();
+
+    let primaryTag = "Ubicación";
+    let primaryClass = "tag-unknown";
+
+    if (loc.includes("workspace")) {
+      primaryTag = "Workspace";
+      primaryClass = "tag-workspace";
+    } else if (loc.includes("serverscriptservice")) {
+      primaryTag = "ServerScriptService";
+      primaryClass = "tag-serverscriptservice";
+    } else if (loc.includes("startergui")) {
+      primaryTag = "StarterGui";
+      primaryClass = "tag-startergui";
+    } else if (loc.includes("starterplayerscripts")) {
+      primaryTag = "StarterPlayerScripts";
+      primaryClass = "tag-starterplayerscripts";
+    } else if (loc.includes("soundservice")) {
+      primaryTag = "SoundService";
+      primaryClass = "tag-soundservice";
     }
 
+    card.innerHTML = `
+      <div class="script-card-header">
+        <div class="script-card-title-row">
+          <span class="script-title">${item.title}</span>
+        </div>
+
+        <span class="script-badge">${item.category}</span>
+      </div>
+
+      <p class="script-description">${item.description}</p>
+
+      <div class="script-location">
+        <i class="fas fa-folder-open"></i>
+
+        <span class="location-label-wrap">
+          <span class="tag ${primaryClass}">
+            <i class="fas fa-map-marker-alt"></i> ${primaryTag}
+          </span>
+
+          <span class="location-code">
+            Ubicación: <code>${item.location}</code>
+          </span>
+        </span>
+      </div>
+
+      <pre><code>${item.code}</code></pre>
+
+      <button class="btn-purple copy-btn" data-copy-scope="closest-card" style="width:100%;">
+        <i class="fas fa-copy"></i> Copiar Código Completo
+      </button>
+    `;
+
+    libraryContainer.appendChild(card);
+  });
+}
     scripts.forEach(item => {
       const card = document.createElement("div");
       card.className = "glass-card script-card";
