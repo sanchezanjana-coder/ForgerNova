@@ -706,8 +706,8 @@ part.AssemblyLinearVelocity = part.CFrame.LookVector * SPEED`
   }
 
   async function generateCustomLuau(query) {
-    if (!GROQ_API_KEY || GROQ_API_KEY === 'AQUI_PONES_TU_CLAVE') {
-      return `<p style="color: #ef4444;">⚠️ No has configurado tu clave API. Abre el archivo <code>script.js</code> y reemplaza el texto <code>'AQUI_PONES_TU_CLAVE'</code> en la línea 6 por tu clave real de Groq.</p>`;
+    if (!GROQ_API_KEY || GROQ_API_KEY === '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') {
+      return `<p style="color: #ef4444;">⚠️ No has configurado tu clave API. Abre el archivo <code>script.js</code> y reemplaza el texto <code>'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'</code> en la línea 6 por tu clave real de Groq.</p>`;
     }
 
     try {
@@ -718,7 +718,7 @@ part.AssemblyLinearVelocity = part.CFrame.LookVector * SPEED`
           "Content-Type": "application/json"
         },
 body: JSON.stringify({
-  model: "llama-3.1-8b-instant",
+model: "llama-3.1-8b-instant",
           messages: [
             {
               role: "system",
