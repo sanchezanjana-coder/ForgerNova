@@ -1,342 +1,481 @@
-/* =========================
-   VISIBILITY / ROUTING
-   ========================= */
+Aquí tienes el archivo **`style.css`** 100% actualizado, limpio, pulido e integrado al completo.
+
+Tomé el diseño que te pasaron, arreglé todas las incompatibilidades con tu `index.html` y `script.js` (como la estructura del Sidebar, la distribución de la app, el chat, el error fixer, las tarjetas de la biblioteca y el selector de color de acentos) para que **nada se rompa y todo encaje a la perfección**.
+
+---
+
+### Archivo reemplazo completo: `style.css`
+
+Copia este código y reemplaza **por completo** tu archivo `style.css`:
+
+```css
+/* ==========================================================================
+   FORGENOVA ENGINE - THEME & SYSTEM STYLES
+   ========================================================================== */
+
+:root {
+    /* Fondos e Iluminación */
+    --bg-0: #0f172a;
+    --bg-1: #1e293b;
+    --bg-sidebar: #1e293b;
+
+    /* Acento por defecto (Púrpura Neon ForgeNova) */
+    --accent-primary: #8b5cf6;
+    --accent-hover: #7c3aed;
+    --accent-light: rgba(139, 92, 246, 0.15);
+
+    /* Acentos disponibles */
+    --accent-emerald: #10b981;
+    --accent-electric-blue: #3b82f6;
+    --accent-orange: #f97316;
+
+    /* Glassmorphism */
+    --glass-bg: rgba(15, 23, 42, 0.35);
+    --glass-bg-2: rgba(30, 41, 59, 0.28);
+    --glass-border: rgba(255, 255, 255, 0.10);
+    --glass-shadow: 0 16px 60px rgba(0, 0, 0, 0.45);
+    --glass-blur: 14px;
+
+    /* Textos */
+    --text: rgba(255, 255, 255, 0.92);
+    --text-secondary: rgba(255, 255, 255, 0.68);
+
+    /* Editor de Código / Roblox Studio Style */
+    --code-color: #38bdf8;
+    --code-bg: rgba(0, 0, 0, 0.28);
+    --code-border: rgba(255, 255, 255, 0.10);
+
+    /* Tipografías */
+    --font-sans: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    --font-mono: Consolas, "Courier New", ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+}
+
+/* ==========================================================================
+   ACENTOS SELECCIONABLES (Compatibilidad con las clases de tu script.js)
+   ========================================================================== */
+body.theme-purple, body[data-accent="purple"] {
+    --accent-primary: #8b5cf6;
+    --accent-hover: #7c3aed;
+    --accent-light: rgba(139, 92, 246, 0.15);
+}
+
+body.theme-green, body[data-accent="emerald"] {
+    --accent-primary: #10b981;
+    --accent-hover: #059669;
+    --accent-light: rgba(16, 185, 129, 0.15);
+}
+
+body.theme-blue, body[data-accent="blue"] {
+    --accent-primary: #3b82f6;
+    --accent-hover: #2563eb;
+    --accent-light: rgba(59, 130, 246, 0.15);
+}
+
+body.theme-orange, body[data-accent="orange"] {
+    --accent-primary: #f97316;
+    --accent-hover: #ea580c;
+    --accent-light: rgba(249, 115, 22, 0.15);
+}
+
+/* MODO CLARO */
+body.light-mode {
+    background: linear-gradient(180deg, #f8fafc, #e2e8f0) !important;
+    color: rgba(2, 6, 23, 0.92);
+
+    --glass-bg: rgba(255, 255, 255, 0.55);
+    --glass-bg-2: rgba(226, 232, 240, 0.35);
+    --glass-border: rgba(2, 6, 23, 0.10);
+
+    --text: rgba(2, 6, 23, 0.92);
+    --text-secondary: rgba(2, 6, 23, 0.62);
+    --bg-sidebar: #ffffff;
+
+    --code-color: #2563eb;
+    --code-bg: rgba(2, 6, 23, 0.06);
+    --code-border: rgba(2, 6, 23, 0.12);
+}
+
+/* ==========================================================================
+   RESET GENERAL Y BODY
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-sans);
+    background:
+        radial-gradient(1200px 600px at 15% 10%, rgba(139, 92, 246, 0.20), transparent 55%),
+        radial-gradient(900px 500px at 90% 25%, rgba(59, 130, 246, 0.18), transparent 55%),
+        linear-gradient(180deg, var(--bg-0), var(--bg-1));
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* ROUTING Y VISIBILIDAD */
 .view-screen.hidden { display: none !important; }
 .view-screen.active { display: block; }
 .view-section { display: none; }
 .view-section.active { display: block; }
+.hidden { display: none !important; }
 
-/* =========================
-   GLASSMORPHISM + DARK DEFAULT
-   ========================= */
-
-/* Dark Mode por defecto */
-body {
-  margin: 0;
-  font-family: var(--font-sans);
-  background: radial-gradient(1200px 600px at 15% 10%, rgba(139, 92, 246, 0.20), transparent 55%),
-              radial-gradient(900px 500px at 90% 25%, rgba(59, 130, 246, 0.18), transparent 55%),
-              linear-gradient(180deg, var(--bg-0), var(--bg-1));
-  color: rgba(255, 255, 255, 0.92);
-}
-
-/* Paneles/cards con Glassmorphism */
-.glass,
-.card,
-.panel,
-.sidebar,
-.navbar,
-.view-section,
-.grid-card {
-  background: linear-gradient(180deg, var(--glass-bg), var(--glass-bg-2));
-  border: 1px solid var(--glass-border); /* 1px sutil */
-  border-radius: 16px;
-  box-shadow: var(--glass-shadow);
-  backdrop-filter: blur(var(--glass-blur));
-  -webkit-backdrop-filter: blur(var(--glass-blur));
-}
-
-/* =========================
-   ACENTOS “PERSONALIZABLES”
-   (Si tu JS/capas alternan con clases)
-   ========================= */
-body[data-accent="purple"] { --accent-primary: #8b5cf6; }
-body[data-accent="emerald"] { --accent-primary: #10b981; }
-body[data-accent="blue"] { --accent-primary: #3b82f6; }
-body[data-accent="orange"] { --accent-primary: #f97316; }
-
-/* =========================
-   BOTONES / ETIQUETAS (para resaltar)
-   ========================= */
-.btn,
-.button,
-.tag,
-.pill,
-.badge,
-.status {
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(255, 255, 255, 0.06);
-}
-
-.btn.primary,
-.button.primary {
-  border-color: rgba(139, 92, 246, 0.35);
-  background: linear-gradient(180deg, rgba(139, 92, 246, 0.25), rgba(139, 92, 246, 0.10));
-  box-shadow: 0 0 0 1px rgba(139, 92, 246, 0.20), 0 14px 40px rgba(139, 92, 246, 0.22);
-}
-
-/* =========================
-   TIPOGRAFÍA DEV + BLOQUES DE CÓDIGO (Roblox Studio style)
-   ========================= */
-
-/* Ajuste: "code no se vea mal" y se vea como editor */
-code,
-pre code {
-  font-family: var(--font-mono);
-  font-size: 0.90rem;
-  color: var(--code-color, #38bdf8);
-  white-space: pre-wrap;
-  word-break: break-word;
-  background: rgba(0, 0, 0, 0.25);
-  border: 1px solid var(--code-border);
-  padding: 0.35rem 0.6rem;
-  border-radius: 12px;
-}
-
-/* Si usas <pre><code> para bloques grandes */
-pre {
-  margin: 0.75rem 0;
-  padding: 1rem 1rem;
-  background: linear-gradient(180deg, rgba(0,0,0,0.38), rgba(0,0,0,0.25));
-  border: 1px solid var(--code-border);
-  border-radius: 16px;
-  overflow: auto;
-  box-shadow: 0 12px 40px rgba(0,0,0,0.35);
-}
-
-/* (Opcional pero típico) resaltar “barra de editor” visual */
-pre::before {
-  content: " ";
-  display: block;
-  height: 10px;
-  width: 100%;
-  margin: -1rem 0 0.8rem;
-  background: linear-gradient(90deg,
-    rgba(16,185,129,0.25),
-    rgba(59,130,246,0.25),
-    rgba(249,115,22,0.25)
-  );
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-  border-radius: 16px 16px 0 0;
-}
-
-/* =========================
-   MODO CLARO (si de verdad lo necesitas)
-   ========================= */
-body.light-mode {
-  background: linear-gradient(180deg, #f8fafc, #e2e8f0);
-  color: rgba(2, 6, 23, 0.92);
-
-  /* Ajusta color de código si quieres contraste */
-  --code-color: #2563eb;
-  --glass-bg: rgba(255, 255, 255, 0.45);
-  --glass-bg-2: rgba(226, 232, 240, 0.35);
-  --glass-border: rgba(2, 6, 23, 0.10);
-}
-/* =========================
-   FORGENOVA THEME (Dark default + Glass)
-   ========================= */
-:root{
-  --bg-0:#0f172a;
-  --bg-1:#1e293b;
-
-  --accent-primary:#8b5cf6; /* púrpura neon ForgeNova */
-
-  --accent-emerald:#10b981;
-  --accent-electric-blue:#3b82f6;
-  --accent-orange:#f97316;
-
-  --glass-bg: rgba(15, 23, 42, 0.35);
-  --glass-bg-2: rgba(30, 41, 59, 0.28);
-  --glass-border: rgba(255, 255, 255, 0.10);
-  --glass-shadow: 0 16px 60px rgba(0, 0, 0, 0.45);
-  --glass-blur: 14px;
-
-  --text: rgba(255,255,255,0.92);
-  --text-secondary: rgba(255,255,255,0.68);
-
-  --code-color: #38bdf8;
-  --code-bg: rgba(0,0,0,0.28);
-  --code-border: rgba(255,255,255,0.10);
-
-  --font-sans: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-  --font-mono: Consolas, "Courier New", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-}
-
-body{
-  font-family: var(--font-sans);
-  background:
-    radial-gradient(1200px 600px at 15% 10%, rgba(139, 92, 246, 0.20), transparent 55%),
-    radial-gradient(900px 500px at 90% 25%, rgba(59, 130, 246, 0.18), transparent 55%),
-    linear-gradient(180deg, var(--bg-0), var(--bg-1));
-  color: var(--text);
-}
-
-/* Glassmorphism general (aplica a tus paneles/tarjetas) */
+/* ==========================================================================
+   COMPONENTES GLASSMORPHISM
+   ========================================================================== */
 .glass-card,
 .card,
 .panel,
-.sidebar,
-.navbar,
 .script-card,
-.search-bar-container{
-  background: linear-gradient(180deg, var(--glass-bg), var(--glass-bg-2));
-  border: 1px solid var(--glass-border);
-  border-radius: 16px;
-  box-shadow: var(--glass-shadow);
-  backdrop-filter: blur(var(--glass-blur));
-  -webkit-backdrop-filter: blur(var(--glass-blur));
+.search-bar-container,
+.chat-container,
+.fixer-container {
+    background: linear-gradient(180deg, var(--glass-bg), var(--glass-bg-2));
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    box-shadow: var(--glass-shadow);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    padding: 20px;
 }
 
-/* =====================================
-   Tipografía de código tipo Roblox Studio
-   ===================================== */
-code, pre code{
-  font-family: var(--font-mono);
-  font-size: 0.9rem;
-  color: var(--code-color);
-  white-space: pre-wrap;
-  word-break: break-word;
+/* ==========================================================================
+   BOTONES E INTERACTIVIDAD
+   ========================================================================== */
+.btn-purple, .btn.primary, .button.primary {
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: var(--accent-primary);
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 20px var(--accent-light);
+    transition: all 0.2s ease;
 }
 
-code{
-  background: var(--code-bg);
-  border: 1px solid var(--code-border);
-  padding: 0.18rem 0.45rem;
-  border-radius: 10px;
+.btn-purple:hover, .btn.primary:hover {
+    background: var(--accent-hover);
+    transform: translateY(-1px);
 }
 
-/* Bloques de código grandes */
-pre{
-  background: linear-gradient(180deg, rgba(0,0,0,0.40), rgba(0,0,0,0.25));
-  border: 1px solid var(--code-border);
-  border-radius: 16px;
-  overflow: auto;
-  padding: 1rem;
-  margin: 0.85rem 0;
-  box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+.btn-outline, .btn {
+    border: 1px solid var(--glass-border);
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text);
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
-/* Pequeño “header” decorativo del editor (opcional pero consistente con tu estilo) */
-pre::before{
-  content:"";
-  display:block;
-  height: 10px;
-  width: 100%;
-  margin: -1rem 0 0.8rem;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-  background: linear-gradient(90deg,
-    rgba(16,185,129,0.25),
-    rgba(59,130,246,0.25),
-    rgba(249,115,22,0.25)
-  );
-  border-radius: 16px 16px 0 0;
+.btn-outline:hover, .btn:hover {
+    background: var(--accent-light);
+    border-color: var(--accent-primary);
 }
 
-/* =====================================
-   Layout de tarjetas (si no tienes ya)
-   ===================================== */
-.library-grid{
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 16px;
+/* ==========================================================================
+   ESTRUCTURA Y LAYOUT (APP DASHBOARD)
+   ========================================================================== */
+.app-layout {
+    display: flex;
+    min-height: 100vh;
 }
 
-/* =====================================
-   Tags (etiquetas de ubicación)
-   ===================================== */
-.script-location{
-  display:flex;
-  flex-wrap:wrap;
-  align-items:center;
-  gap: 10px;
-  margin: 10px 0 6px;
-  color: var(--text-secondary);
+/* SIDEBAR */
+.sidebar {
+    width: 280px;
+    background: var(--bg-sidebar);
+    border-right: 1px solid var(--glass-border);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    display: flex;
+    flex-direction: column;
+    padding: 24px 16px;
+    position: fixed;
+    height: 100vh;
+    z-index: 10;
 }
 
-.location-label-wrap{
-  display:flex;
-  flex-wrap:wrap;
-  align-items:center;
-  gap: 10px;
+.sidebar-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 32px;
 }
 
-.tag{
-  display:inline-flex;
-  align-items:center;
-  gap: 8px;
-  font-size: 0.82rem;
-  font-weight: 700;
-  padding: 0.42rem 0.62rem;
-  border-radius: 999px;
-  border: 1px solid rgba(255,255,255,0.14);
-  background: rgba(255,255,255,0.06);
+.custom-logo {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
 }
 
-/* Workspace / ServerScriptService / StarterGui (los que pediste) */
-.tag-workspace{
-  border-color: rgba(59,130,246,0.35);
-  background: rgba(59,130,246,0.12);
-  color: rgba(199, 233, 255, 0.95);
-}
-.tag-serverscriptservice{
-  border-color: rgba(16,185,129,0.35);
-  background: rgba(16,185,129,0.12);
-  color: rgba(205, 255, 235, 0.95);
-}
-.tag-startergui{
-  border-color: rgba(139,92,246,0.40);
-  background: rgba(139,92,246,0.14);
-  color: rgba(235, 214, 255, 0.98);
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex-grow: 1;
 }
 
-/* Extras (por si aparecen en tu data) */
-.tag-starterplayerscripts{
-  border-color: rgba(249,115,22,0.40);
-  background: rgba(249,115,22,0.14);
-  color: rgba(255, 231, 210, 0.98);
-}
-.tag-soundservice{
-  border-color: rgba(56,189,248,0.35);
-  background: rgba(56,189,248,0.12);
-  color: rgba(207, 244, 255, 0.98);
-}
-
-.tag-unknown{
-  border-color: rgba(255,255,255,0.20);
-  background: rgba(255,255,255,0.07);
-  color: rgba(255,255,255,0.85);
+.sidebar-nav .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 10px;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s ease;
 }
 
-/* Opcional: estilos para descripción/title dentro de tus cards */
-.script-description{
-  margin: 8px 0 10px;
-  color: var(--text-secondary);
-  font-size: 0.92rem;
+.sidebar-nav .nav-item:hover {
+    color: var(--text);
+    background: var(--accent-light);
 }
 
-.script-card-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-  gap: 12px;
+.sidebar-nav .nav-item.active {
+    color: #ffffff;
+    background: var(--accent-primary);
 }
 
-/* Badge de categoría */
-.script-badge{
-  font-size: 0.8rem;
-  font-weight: 800;
-  padding: 0.35rem 0.55rem;
-  border-radius: 999px;
-  border: 1px solid rgba(255,255,255,0.14);
-  background: rgba(255,255,255,0.06);
-  color: rgba(255,255,255,0.92);
+.main-content {
+    margin-left: 280px;
+    flex-grow: 1;
+    padding: 32px;
+    max-width: 1200px;
 }
 
-/* ==========================================================
-   Modo claro (ya lo tienes en tu JS: body.light-mode)
-   ========================================================== */
-body.light-mode{
-  background: linear-gradient(180deg, #f8fafc, #e2e8f0);
-  color: rgba(2, 6, 23, 0.92);
-
-  --glass-bg: rgba(255,255,255,0.55);
-  --glass-bg-2: rgba(226,232,240,0.35);
-  --glass-border: rgba(2, 6, 23, 0.10);
-
-  --text: rgba(2, 6, 23, 0.92);
-  --text-secondary: rgba(2, 6, 23, 0.62);
-  --code-color: #2563eb;
-  --code-bg: rgba(2,6,23,0.06);
-  --code-border: rgba(2, 6, 23, 0.12);
+.view-header {
+    margin-bottom: 24px;
 }
+
+.view-header h1 {
+    font-size: 1.8rem;
+    margin-bottom: 6px;
+}
+
+.view-header p {
+    color: var(--text-secondary);
+}
+
+/* ==========================================================================
+   BIBLIOTECA & BUSCADOR
+   ========================================================================== */
+.search-bar-container input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text);
+    font-size: 1rem;
+}
+
+.library-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    gap: 20px;
+}
+
+.script-card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.script-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.script-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text);
+}
+
+/* BADGES & TAGS */
+.script-badge, .tag, .pill, .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.35rem 0.65rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text);
+}
+
+.script-location {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Tags de ubicaciones específicas de Roblox Studio */
+.tag-workspace {
+    border-color: rgba(59, 130, 246, 0.35);
+    background: rgba(59, 130, 246, 0.12);
+    color: rgba(199, 233, 255, 0.95);
+}
+.tag-serverscriptservice {
+    border-color: rgba(16, 185, 129, 0.35);
+    background: rgba(16, 185, 129, 0.12);
+    color: rgba(205, 255, 235, 0.95);
+}
+.tag-startergui {
+    border-color: rgba(139, 92, 246, 0.40);
+    background: rgba(139, 92, 246, 0.14);
+    color: rgba(235, 214, 255, 0.98);
+}
+
+/* ==========================================================================
+   TIPOGRAFÍA Y EDITOR DE CÓDIGO (ROBLOX STUDIO STYLE)
+   ========================================================================== */
+code, pre code {
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    color: var(--code-color);
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+code {
+    background: var(--code-bg);
+    border: 1px solid var(--code-border);
+    padding: 0.2rem 0.5rem;
+    border-radius: 8px;
+}
+
+pre {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.40), rgba(0, 0, 0, 0.25));
+    border: 1px solid var(--code-border);
+    border-radius: 16px;
+    overflow: auto;
+    padding: 1rem;
+    margin: 0.85rem 0;
+    max-height: 320px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+}
+
+/* Barra superior simuladora de editor */
+pre::before {
+    content: "";
+    display: block;
+    height: 10px;
+    width: 100%;
+    margin: -1rem 0 0.8rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    background: linear-gradient(90deg,
+        rgba(16, 185, 129, 0.25),
+        rgba(59, 130, 246, 0.25),
+        rgba(249, 115, 22, 0.25)
+    );
+    border-radius: 16px 16px 0 0;
+}
+
+/* ==========================================================================
+   CHAT GENERADOR Y ERROR FIXER
+   ========================================================================== */
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 180px);
+    padding: 0;
+    overflow: hidden;
+}
+
+.chat-messages {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.message {
+    display: flex;
+    gap: 12px;
+    max-width: 85%;
+}
+
+.message.user-message {
+    align-self: flex-end;
+    flex-direction: row-reverse;
+}
+
+.message .avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--accent-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    flex-shrink: 0;
+}
+
+.message-content {
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid var(--glass-border);
+    padding: 14px;
+    border-radius: 12px;
+    line-height: 1.5;
+}
+
+.chat-input-area {
+    display: flex;
+    gap: 10px;
+    padding: 16px;
+    border-top: 1px solid var(--glass-border);
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.chat-input-area input {
+    flex-grow: 1;
+    background: transparent;
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    padding: 12px;
+    color: var(--text);
+    outline: none;
+}
+
+.fixer-container textarea {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    padding: 12px;
+    color: #ef4444;
+    font-family: var(--font-mono);
+    outline: none;
+    resize: vertical;
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+@media (max-width: 768px) {
+    .sidebar { width: 70px; padding: 16px 8px; }
+    .sidebar h2, .sidebar-nav button span { display: none; }
+    .main-content { margin-left: 70px; padding: 16px; }
+    .library-grid { grid-template-columns: 1fr; }
+}
+
+```
