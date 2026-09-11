@@ -378,22 +378,37 @@ body {
   flex-direction: row-reverse;
 }
 
+/* Corrección para centrar el icono dentro del avatar */
 .avatar {
-  width: 36px;
-  height: 36px;
-  min-width: 36px;            /* Evita que el círculo se aplaste */
-  border-radius: 50%;
-  background-color: #8b5cf6;   /* Tu color morado */
+  width: 38px !important;
+  height: 38px !important;
+  min-width: 38px !important;
+  border-radius: 50% !important;
+  background-color: #8b5cf6 !important;
   
-  /* Alineación centrada perfecta */
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  /* Centrado flexbox estricto */
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
   
-  /* Ajuste del icono interno */
-  font-size: 16px;
-  color: #ffffff;
-  margin: 0 10px;             /* Separa el círculo del texto */
+  /* Forzar tamaño del icono y limpiar desajustes */
+  font-size: 18px !important;
+  line-height: 1 !important;
+  color: #ffffff !important;
+  
+  /* Resetear márgenes y padding internos que desplazan la cara */
+  padding: 0 !important;
+  margin: 0 10px 0 0 !important;
+  box-sizing: border-box !important;
+  vertical-align: middle !important;
+}
+
+/* Evitar pseudoelementos desalineados de FontAwesome */
+.avatar::before {
+  display: block !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 .avatar i {
