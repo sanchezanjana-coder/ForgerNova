@@ -516,8 +516,6 @@ end)`
 local part = script.Parent
 local SPEED = 10
 
--- Nota: esto afecta al propio part. Para afectar personajes/objetos,
--- conviene manejar Touched/Stepped y aplicar a HumanoidRootPart.
 part.AssemblyLinearVelocity = part.CFrame.LookVector * SPEED`
     }
   ];
@@ -528,94 +526,64 @@ part.AssemblyLinearVelocity = part.CFrame.LookVector * SPEED`
   const libraryContainer = document.getElementById("library-container");
   const searchInput = document.getElementById("library-search");
 
- function renderLibrary(scripts) {
-  if (!libraryContainer) return;
-  libraryContainer.innerHTML = "";
+  function renderLibrary(scripts) {
+    if (!libraryContainer) return;
+    libraryContainer.innerHTML = "";
 
-  if (!scripts || scripts.length === 0) {
-    libraryContainer.innerHTML = `
-      <p style="color: var(--text-secondary); grid-column: 1/-1;">
-        No se encontraron scripts que coincidan con la búsqueda.
-      </p>`;
-    return;
-  }
-
-  scripts.forEach(item => {
-    const card = document.createElement("div");
-    card.className = "glass-card script-card";
-
-    // ====== TAGS por ubicación (Workspace / ServerScriptService / StarterGui) ======
-    const loc = (item.location || "").toLowerCase();
-
-    let primaryTag = "Ubicación";
-    let primaryClass = "tag-unknown";
-
-    if (loc.includes("workspace")) {
-      primaryTag = "Workspace";
-      primaryClass = "tag-workspace";
-    } else if (loc.includes("serverscriptservice")) {
-      primaryTag = "ServerScriptService";
-      primaryClass = "tag-serverscriptservice";
-    } else if (loc.includes("startergui")) {
-      primaryTag = "StarterGui";
-      primaryClass = "tag-startergui";
-    } else if (loc.includes("starterplayerscripts")) {
-      primaryTag = "StarterPlayerScripts";
-      primaryClass = "tag-starterplayerscripts";
-    } else if (loc.includes("soundservice")) {
-      primaryTag = "SoundService";
-      primaryClass = "tag-soundservice";
+    if (!scripts || scripts.length === 0) {
+      libraryContainer.innerHTML = `
+        <p style="color: var(--text-secondary); grid-column: 1/-1;">
+          No se encontraron scripts que coincidan con la búsqueda.
+        </p>`;
+      return;
     }
 
-    card.innerHTML = `
-      <div class="script-card-header">
-        <div class="script-card-title-row">
-          <span class="script-title">${item.title}</span>
-        </div>
-
-        <span class="script-badge">${item.category}</span>
-      </div>
-
-      <p class="script-description">${item.description}</p>
-
-      <div class="script-location">
-        <i class="fas fa-folder-open"></i>
-
-        <span class="location-label-wrap">
-          <span class="tag ${primaryClass}">
-            <i class="fas fa-map-marker-alt"></i> ${primaryTag}
-          </span>
-
-          <span class="location-code">
-            Ubicación: <code>${item.location}</code>
-          </span>
-        </span>
-      </div>
-
-      <pre><code>${item.code}</code></pre>
-
-      <button class="btn-purple copy-btn" data-copy-scope="closest-card" style="width:100%;">
-        <i class="fas fa-copy"></i> Copiar Código Completo
-      </button>
-    `;
-
-    libraryContainer.appendChild(card);
-  });
-}
     scripts.forEach(item => {
       const card = document.createElement("div");
       card.className = "glass-card script-card";
 
+      const loc = (item.location || "").toLowerCase();
+
+      let primaryTag = "Ubicación";
+      let primaryClass = "tag-unknown";
+
+      if (loc.includes("workspace")) {
+        primaryTag = "Workspace";
+        primaryClass = "tag-workspace";
+      } else if (loc.includes("serverscriptservice")) {
+        primaryTag = "ServerScriptService";
+        primaryClass = "tag-serverscriptservice";
+      } else if (loc.includes("startergui")) {
+        primaryTag = "StarterGui";
+        primaryClass = "tag-startergui";
+      } else if (loc.includes("starterplayerscripts")) {
+        primaryTag = "StarterPlayerScripts";
+        primaryClass = "tag-starterplayerscripts";
+      } else if (loc.includes("soundservice")) {
+        primaryTag = "SoundService";
+        primaryClass = "tag-soundservice";
+      }
+
       card.innerHTML = `
         <div class="script-card-header">
-          <span class="script-title">${item.title}</span>
+          <div class="script-card-title-row">
+            <span class="script-title">${item.title}</span>
+          </div>
           <span class="script-badge">${item.category}</span>
         </div>
 
-        <p style="font-size:0.9rem; color:var(--text-secondary);">${item.description}</p>
+        <p class="script-description">${item.description}</p>
 
         <div class="script-location">
-          <i class="fas fa-folder-open"></i> Ubicación: <code>${item.location}</code>
+          <i class="fas fa-folder-open"></i>
+          <span class="location-label-wrap">
+            <span class="tag ${primaryClass}">
+              <i class="fas fa-map-marker-alt"></i> ${primaryTag}
+            </span>
+            <span class="location-code">
+              Ubicación: <code>${item.location}</code>
+            </span>
+          </span>
         </div>
 
         <pre><code>${item.code}</code></pre>
@@ -627,6 +595,8 @@ part.AssemblyLinearVelocity = part.CFrame.LookVector * SPEED`
 
       libraryContainer.appendChild(card);
     });
+
+    setupCopyButtons(libraryContainer);
   }
 
   renderLibrary(scriptLibrary);
@@ -644,12 +614,11 @@ part.AssemblyLinearVelocity = part.CFrame.LookVector * SPEED`
   }
 
   // ==========================================================================
-  // 3) COPY PERFECTO (biblioteca / chat / fixer)
+  // 3) COPY PERFECTO
   // ==========================================================================
   function setupCopyButtons(root = document) {
     const buttons = root.querySelectorAll(".copy-btn");
     buttons.forEach(btn => {
-      // Evita duplicar handlers
       if (btn.dataset.bound === "1") return;
       btn.dataset.bound = "1";
 
@@ -671,7 +640,6 @@ part.AssemblyLinearVelocity = part.CFrame.LookVector * SPEED`
             btn.innerHTML = original;
           }, 2000);
         } catch {
-          // fallback simple
           const ta = document.createElement("textarea");
           ta.value = text;
           document.body.appendChild(ta);
@@ -686,9 +654,6 @@ part.AssemblyLinearVelocity = part.CFrame.LookVector * SPEED`
       });
     });
   }
-
-  // Inicial: biblioteca ya renderizada
-  setupCopyButtons(libraryContainer);
 
   // ==========================================================================
   // 4) NAV (SIDEBAR) - CAMBIO DE VIEWS
@@ -735,7 +700,6 @@ part.AssemblyLinearVelocity = part.CFrame.LookVector * SPEED`
     chatMessages.appendChild(msgDiv);
     chatMessages.scrollTop = chatMessages.scrollHeight;
 
-    // Asegura bind del botón copy dentro del nuevo mensaje
     setupCopyButtons(msgDiv);
   }
 
@@ -848,7 +812,7 @@ local parte = workspace:WaitForChild("NombreDeTuParte")</code></pre>
   });
 
   // ==========================================================================
-  // 8) (Opcional) Landing/Back-home
+  // 8) LANDING / BACK HOME
   // ==========================================================================
   const landingScreen = document.getElementById("landing-screen");
   const appScreen = document.getElementById("app-screen");
@@ -867,7 +831,6 @@ local parte = workspace:WaitForChild("NombreDeTuParte")</code></pre>
     if (appScreen) appScreen.classList.remove("active");
   }
 
-  // Si no quieres landing, puedes ignorarlo
   if (backHomeBtn) backHomeBtn.addEventListener("click", showLanding);
   if (enterHeroBtn) enterHeroBtn.addEventListener("click", showApp);
   if (enterTopBtn) enterTopBtn.addEventListener("click", showApp);
