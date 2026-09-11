@@ -1,7 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // ==========================================================================
-  // 🔑 PON TU CLAVE DE GROQ EN LA SIGUIENTE LÍNEA (DENTRO DE LAS COMILLAS):
-  // ==========================================================================
   const GROQ_API_KEY = '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';
 
   // ==========================================================================
